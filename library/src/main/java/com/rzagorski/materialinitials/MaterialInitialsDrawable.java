@@ -22,7 +22,7 @@ public class MaterialInitialsDrawable extends Drawable {
 
     public MaterialInitialsDrawable() {
         super();
-        texts = new String[]{"AB", "CD", "EF", "GH"};
+        texts = new String[]{"ABC", "CDE", "EFG", "GHI"};
         backgroundColorsMaterial500 = new int[]{Color.rgb(244,67,54),
                 Color.rgb(233,30,99),
                 Color.rgb(156,39,176),
@@ -111,14 +111,16 @@ public class MaterialInitialsDrawable extends Drawable {
             if (backgroundColors != null) {
                 color = backgroundColors[i];
             } else {
-                color = backgroundColorsMaterial500[(int) Math.round(Math.random() * backgroundColorsMaterial500.length)];
+                color = backgroundColorsMaterial500[(int) Math.round(Math.random() * (backgroundColorsMaterial500.length - 1))];
             }
             paint.setColor(color);
             canvas.drawArc(new RectF(0, 0, width, height), i * angle, angle, true, paint);
-            canvas.drawLine(width / 2, height / 2,
-                    (int) (width / 2 + width / 2 * Math.cos(Math.toRadians(i * angle))),
-                    (int) (height / 2 + height / 2 * Math.sin(Math.toRadians(i * angle))),
-                    whitePaint);
+            if (texts.length > 1) {
+                canvas.drawLine(width / 2, height / 2,
+                        (int) (width / 2 + width / 2 * Math.cos(Math.toRadians(i * angle))),
+                        (int) (height / 2 + height / 2 * Math.sin(Math.toRadians(i * angle))),
+                        whitePaint);
+            }
             letterPlaces[i] = getTextClipRect(width, height, i, angle);
         }
         Paint paint = new Paint();
@@ -133,6 +135,10 @@ public class MaterialInitialsDrawable extends Drawable {
         for (int i = 0; i < texts.length; ++i) {
             float verticalDifference = letterPlaces[i].bottom - letterPlaces[i].top;
             float horizontalDifference = letterPlaces[i].right - letterPlaces[i].left;
+            if (texts.length == 1) {
+                letterPlaces[i].bottom -= verticalDifference * 0.1;
+                letterPlaces[i].left -= horizontalDifference * 0.2;
+            }
             if (texts.length == 2) {
                 letterPlaces[i].bottom -= verticalDifference * 0.1;
                 letterPlaces[i].left += horizontalDifference * 0.1;
@@ -142,27 +148,52 @@ public class MaterialInitialsDrawable extends Drawable {
                 letterPlaces[i].top += verticalDifference * 0.25;
                 letterPlaces[i].bottom *= 0.75;
             }
-            Path clipPath = new Path();
-            clipPath.addArc(new RectF(0, 0, width, height), i * angle, angle);
-            clipPath.lineTo(width / 2, height / 2);
-            clipPath.close();
-            canvas.save();
-            canvas.clipPath(clipPath, Region.Op.INTERSECT);
-
+            if (texts.length > 1) {
+                Path clipPath = new Path();
+                clipPath.addArc(new RectF(0, 0, width, height), i * angle, angle);
+                clipPath.lineTo(width / 2, height / 2);
+                clipPath.close();
+                canvas.save();
+                canvas.clipPath(clipPath, Region.Op.INTERSECT);
+            }
 
             float textWidth = paint.measureText(texts[i]);
             float letterBeginning;
             for (int j = 0 ; j < texts[i].length() ; ++j) {
-                letterBeginning = ((texts.length == 4 ? 0 : 0.09F) + j * 0.27F) * textWidth;
+                float beginning = texts.length == 4 ? 0 : 0.09F;
+                float spacing;
+                switch (texts[i].length()) {
+                    case 1:
+                        spacing = 0.33F;
+                        break;
+                    case 2:
+                        spacing = j * 0.27F;
+                        break;
+                    case 3:
+                        beginning -= 0.12F;
+                        spacing = j * 0.18F;
+                        break;
+                    default:
+                        spacing = 0.33F;
+                        break;
+                }
+                letterBeginning = (beginning + spacing) * textWidth;
                 canvas.drawText(texts[i].toCharArray(), j, 1, letterPlaces[i].left + letterBeginning, letterPlaces[i].bottom, paint);
             }
-            canvas.restore();
+            if (texts.length > 1) {
+                canvas.restore();
+            }
         }
         canvas.rotate(25, canvas.getWidth() / 2, canvas.getHeight() / 2);
     }
 
     private RectF getTextClipRect(int width, int height, int circleSector, int sectorAngle) {
-        RectF rectF = new RectF(Math.round(width / 2 + (width / 2 * Math.cos(Math.toRadians(circleSector * sectorAngle))) * 0.9),
+        RectF rectF;
+        if (sectorAngle == 360) {
+            rectF = new RectF(0, 0, width, height);
+            return rectF;
+        }
+        rectF = new RectF(Math.round(width / 2 + (width / 2 * Math.cos(Math.toRadians(circleSector * sectorAngle))) * 0.9),
                 Math.round(height / 2 + (height / 2 * Math.sin(Math.toRadians(circleSector * sectorAngle))) * 0.9),
                 Math.round(width / 2 + (width / 2 * Math.cos(Math.toRadians((circleSector + 1) * sectorAngle))) * 0.9),
                 Math.round(height / 2 + (height / 2 * Math.sin(Math.toRadians((circleSector + 1) * sectorAngle))) * 0.9));
@@ -189,16 +220,5 @@ public class MaterialInitialsDrawable extends Drawable {
 
     private boolean isVertical(RectF rectF) {
         return rectF.right - rectF.left < rectF.bottom - rectF.top;
-    }
-
-    private Point[] getPoints(int x0, int y0, int r, int noOfDividingPoints) {
-        double angle = 0;
-        Point[] points = new Point[noOfDividingPoints];
-        for (int i = 0; i < noOfDividingPoints; i++) {
-            angle = i * (360 / noOfDividingPoints);
-            points[i] = new Point((int) (x0 + r * Math.cos(Math.toRadians(angle))),
-                    (int) (y0 + r * Math.sin(Math.toRadians(angle))));
-        }
-        return points;
     }
 }
