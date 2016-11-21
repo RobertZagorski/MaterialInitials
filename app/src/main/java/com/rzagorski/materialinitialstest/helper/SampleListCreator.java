@@ -1,0 +1,46 @@
+package com.rzagorski.materialinitialstest.helper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+/**
+ * @see <a href="http://stackoverflow.com/a/41156/6507689>http://stackoverflow.com/a/41156/6507689</a>
+ * Created by Robert Zagórski on 2016-11-21.
+ */
+public class SampleListCreator {
+
+    private static final char[] symbols;
+    private static final Random random = new Random();
+
+    static {
+        StringBuilder tmp = new StringBuilder();
+        for (char ch = 'A'; ch <= 'Z'; ++ch)
+            tmp.append(ch);
+        symbols = tmp.toString().toCharArray();
+    }
+
+    public static List<String[]> populateList(int listSize, int arraySize) {
+        List<String[]> outputList = new ArrayList<>(listSize);
+        for (int i = 0; i < listSize; ++i) {
+            String[] listItem = new String[arraySize];
+            for (int j = 0; j < arraySize; ++j) {
+                listItem[j] = createRandomString(10);
+            }
+            outputList.add(i, listItem);
+        }
+        return outputList;
+    }
+
+    private static String createRandomString(int length) {
+        char[] buf = new char[length * 2 + 1];
+        for (int idx = 0; idx < buf.length; ++idx) {
+            if (idx == length) {
+                buf[idx] = ' ';
+                continue;
+            }
+            buf[idx] = symbols[random.nextInt(symbols.length)];
+        }
+        return new String(buf);
+    }
+}
