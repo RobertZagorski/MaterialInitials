@@ -6,7 +6,6 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
-import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.graphics.drawable.Drawable;
@@ -22,26 +21,31 @@ public class MaterialInitialsDrawable extends Drawable {
 
     public MaterialInitialsDrawable() {
         super();
-        texts = new String[]{"ABC", "CDE", "EFG", "GHI"};
-        backgroundColorsMaterial500 = new int[]{Color.rgb(244,67,54),
-                Color.rgb(233,30,99),
-                Color.rgb(156,39,176),
-                Color.rgb(103,58,183),
-                Color.rgb(63,81,181),
-                Color.rgb(33,150,243),
-                Color.rgb(3,169,244),
-                Color.rgb(0,188,212),
-                Color.rgb(0,150,136),
-                Color.rgb(76,175,80),
-                Color.rgb(139,195,74),
-                Color.rgb(205,220,57),
-                Color.rgb(255,235,59),
-                Color.rgb(255,193,7),
-                Color.rgb(255,152,0),
-                Color.rgb(255,87,34),
-                Color.rgb(121,85,72),
-                Color.rgb(158,158,158),
-                Color.rgb(96,125,139)};
+        texts = new String[]{};
+        backgroundColorsMaterial500 = new int[]{Color.rgb(244, 67, 54),
+                Color.rgb(233, 30, 99),
+                Color.rgb(156, 39, 176),
+                Color.rgb(103, 58, 183),
+                Color.rgb(63, 81, 181),
+                Color.rgb(33, 150, 243),
+                Color.rgb(3, 169, 244),
+                Color.rgb(0, 188, 212),
+                Color.rgb(0, 150, 136),
+                Color.rgb(76, 175, 80),
+                Color.rgb(139, 195, 74),
+                Color.rgb(205, 220, 57),
+                Color.rgb(255, 235, 59),
+                Color.rgb(255, 193, 7),
+                Color.rgb(255, 152, 0),
+                Color.rgb(255, 87, 34),
+                Color.rgb(121, 85, 72),
+                Color.rgb(158, 158, 158),
+                Color.rgb(96, 125, 139)};
+    }
+
+    public MaterialInitialsDrawable(String[] texts) {
+        this();
+        this.texts = texts;
     }
 
     public MaterialInitialsDrawable(int[] backgroundColors, String[] texts) {
@@ -49,12 +53,12 @@ public class MaterialInitialsDrawable extends Drawable {
         this.texts = texts;
     }
 
-    public void setTexts(String[] inputTexts) {
-        if (texts == null) {
+    public void setTexts(String... inputTexts) {
+        if (inputTexts == null) {
             throw new IllegalArgumentException("Passed texts cannot be null");
         }
         texts = new String[inputTexts.length];
-        for (int i = 0 ; i < 4 || i < inputTexts.length ; ++i) {
+        for (int i = 0; i < 4 && i < inputTexts.length; ++i) {
             if (inputTexts[i] == null) {
                 throw new IllegalArgumentException("Passed texts cannot be null");
             }
@@ -65,7 +69,7 @@ public class MaterialInitialsDrawable extends Drawable {
                 parts = new String[]{inputTexts[i]};
             }
             String outputText = "";
-            for (int j = 0 ; j < parts.length || j < 3 ; ++j) {
+            for (int j = 0; j < parts.length && j < 3; ++j) {
                 outputText += parts[j].substring(0, 1);
             }
             texts[i] = outputText;
@@ -103,7 +107,7 @@ public class MaterialInitialsDrawable extends Drawable {
         whitePaint.setColor(Color.WHITE);
         whitePaint.setStrokeWidth(4);
         whitePaint.setColor(Color.WHITE);
-        int angle = 360 / texts.length;
+        int angle = 360 / (texts.length == 0 ? 1 : texts.length);
         RectF[] letterPlaces = new RectF[texts.length];
         for (int i = 0; i < texts.length; ++i) {
             Paint paint = new Paint();
@@ -159,7 +163,7 @@ public class MaterialInitialsDrawable extends Drawable {
 
             float textWidth = paint.measureText(texts[i]);
             float letterBeginning;
-            for (int j = 0 ; j < texts[i].length() ; ++j) {
+            for (int j = 0; j < texts[i].length(); ++j) {
                 float beginning = texts.length == 4 ? 0 : 0.09F;
                 float spacing;
                 switch (texts[i].length()) {

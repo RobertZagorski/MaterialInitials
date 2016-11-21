@@ -2,12 +2,6 @@ package com.rzagorski.materialinitials;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
-import android.graphics.RectF;
-import android.graphics.Region;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -37,6 +31,10 @@ public class MaterialInitials extends ImageView {
         int height = MeasureSpec.getSize(heightMeasureSpec);
         int size = width > height ? height : width;
         setMeasuredDimension(size, size);
+    }
+
+    public void setTexts(String... texts) {
+        miDrawable.setTexts(texts);
     }
 
     @Override
