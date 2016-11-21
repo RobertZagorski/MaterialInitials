@@ -29,8 +29,8 @@ public class MIAdapter extends RecyclerView.Adapter<MIHolder> {
         String[] values = mList.get(position);
         String outputText = "";
         for (int i = 0; i < values.length; ++i) {
-            if (i < values.length - 1) {
-                outputText += ",";
+            if (i > 0 && i <= values.length - 1) {
+                outputText += ", ";
             }
             outputText += values[i];
         }

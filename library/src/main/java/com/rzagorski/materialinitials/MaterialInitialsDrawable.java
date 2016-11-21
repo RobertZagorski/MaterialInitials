@@ -45,12 +45,12 @@ public class MaterialInitialsDrawable extends Drawable {
 
     public MaterialInitialsDrawable(String[] texts) {
         this();
-        this.texts = texts;
+        setTexts(texts);
     }
 
     public MaterialInitialsDrawable(int[] backgroundColors, String[] texts) {
         this.backgroundColors = backgroundColors;
-        this.texts = texts;
+        setTexts(texts);
     }
 
     public void setTexts(String... inputTexts) {
@@ -130,9 +130,6 @@ public class MaterialInitialsDrawable extends Drawable {
         Paint paint = new Paint();
         paint.setColor(Color.parseColor("#88FFFFFF"));
         paint.setTextSize((int) (height * 1.2));
-        Paint secPaint = new Paint();
-        secPaint.setColor(Color.parseColor("#88000000"));
-        secPaint.setTextSize((int) (height * 1.2));
         if (texts.length > 1) {
             paint.setTextSize(paint.getTextSize() / 2);
         }

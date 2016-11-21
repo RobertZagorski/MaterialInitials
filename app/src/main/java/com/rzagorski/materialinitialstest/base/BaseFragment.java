@@ -9,13 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rzagorski.materialinitialstest.R;
-import com.rzagorski.materialinitialstest.helper.SampleListCreator;
 
 /**
  * Created by Robert Zagórski on 2016-11-21.
  */
 
-public class BaseFragment extends android.support.v4.app.Fragment implements InitialsFragment {
+public abstract class BaseFragment extends android.support.v4.app.Fragment implements InitialsFragment {
     RecyclerView mRecyclerView;
 
     @Nullable
@@ -29,7 +28,7 @@ public class BaseFragment extends android.support.v4.app.Fragment implements Ini
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        mRecyclerView.setAdapter(new MIAdapter(getItemLayout(), SampleListCreator.populateList(100, 1)));
+        mRecyclerView.setAdapter(getAdapter());
     }
 
     @Override
@@ -37,7 +36,5 @@ public class BaseFragment extends android.support.v4.app.Fragment implements Ini
         return "1";
     }
 
-    protected int getItemLayout() {
-        return R.layout.layout_with_material_initials;
-    }
+    protected abstract RecyclerView.Adapter getAdapter();
 }
