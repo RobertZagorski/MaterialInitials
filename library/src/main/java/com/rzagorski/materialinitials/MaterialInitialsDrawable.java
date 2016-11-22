@@ -6,6 +6,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.graphics.drawable.Drawable;
@@ -107,119 +108,59 @@ public class MaterialInitialsDrawable extends Drawable {
         whitePaint.setColor(Color.WHITE);
         whitePaint.setStrokeWidth(4);
         whitePaint.setColor(Color.WHITE);
+        Paint paint = new Paint();
+        paint.setColor(Color.parseColor("#88FFFFFF"));
+        paint.setTextSize((height));
         int angle = 360 / (texts.length == 0 ? 1 : texts.length);
-        RectF[] letterPlaces = new RectF[texts.length];
         for (int i = 0; i < texts.length; ++i) {
-            Paint paint = new Paint();
+            Paint backgroundPaint = new Paint();
             int color;
             if (backgroundColors != null) {
                 color = backgroundColors[i];
             } else {
                 color = backgroundColorsMaterial500[(int) Math.round(Math.random() * (backgroundColorsMaterial500.length - 1))];
             }
-            paint.setColor(color);
-            canvas.drawArc(new RectF(0, 0, width, height), i * angle, angle, true, paint);
+            backgroundPaint.setColor(color);
+            canvas.drawArc(new RectF(0, 0, width, height), i * angle, angle, true, backgroundPaint);
             if (texts.length > 1) {
                 canvas.drawLine(width / 2, height / 2,
                         (int) (width / 2 + width / 2 * Math.cos(Math.toRadians(i * angle))),
                         (int) (height / 2 + height / 2 * Math.sin(Math.toRadians(i * angle))),
                         whitePaint);
             }
-            letterPlaces[i] = getTextClipRect(width, height, i, angle);
         }
-        Paint paint = new Paint();
-        paint.setColor(Color.parseColor("#88FFFFFF"));
-        paint.setTextSize((int) (height * 1.2));
         if (texts.length > 1) {
             paint.setTextSize(paint.getTextSize() / 2);
         }
         for (int i = 0; i < texts.length; ++i) {
-            float verticalDifference = letterPlaces[i].bottom - letterPlaces[i].top;
-            float horizontalDifference = letterPlaces[i].right - letterPlaces[i].left;
-            if (texts.length == 1) {
-                letterPlaces[i].bottom -= verticalDifference * 0.1;
-                letterPlaces[i].left -= horizontalDifference * 0.2;
-            }
-            if (texts.length == 2) {
-                letterPlaces[i].bottom -= verticalDifference * 0.1;
-                letterPlaces[i].left += horizontalDifference * 0.1;
-            }
-            if (isVertical(letterPlaces[i]) && texts.length == 3) {
-                letterPlaces[i].left -= horizontalDifference * 0.5;
-                letterPlaces[i].top += verticalDifference * 0.25;
-                letterPlaces[i].bottom *= 0.75;
-            }
             if (texts.length > 1) {
+                canvas.save();
                 Path clipPath = new Path();
                 clipPath.addArc(new RectF(0, 0, width, height), i * angle, angle);
                 clipPath.lineTo(width / 2, height / 2);
                 clipPath.close();
-                canvas.save();
                 canvas.clipPath(clipPath, Region.Op.INTERSECT);
             }
-
-            float textWidth = paint.measureText(texts[i]);
-            float letterBeginning;
+            Rect textBounds = new Rect();
+            paint.getTextBounds(texts[i], 0, texts[i].length(), textBounds);
+            Rect letterPlaces = canvas.getClipBounds();
+            float originalTextWidth = textBounds.width();
+            textBounds.left += originalTextWidth * 0.09;
+            textBounds.right -= originalTextWidth * 0.09;
+            float textWidth = textBounds.width();
             for (int j = 0; j < texts[i].length(); ++j) {
-                float beginning = texts.length == 4 ? 0 : 0.09F;
-                float spacing;
-                switch (texts[i].length()) {
-                    case 1:
-                        spacing = 0.33F;
-                        break;
-                    case 2:
-                        spacing = j * 0.27F;
-                        break;
-                    case 3:
-                        beginning -= 0.12F;
-                        spacing = j * 0.18F;
-                        break;
-                    default:
-                        spacing = 0.33F;
-                        break;
+                float letterStart = letterPlaces.left + (letterPlaces.width() - textBounds.width()) / 2 + j * textWidth / texts[i].length();
+                float letterWidth = paint.measureText(texts[i].substring(j, j + 1));
+                if (originalTextWidth / texts[i].length() > letterWidth && j > 0) {
+                    letterStart += (paint.measureText(texts[i].substring(j - 1, j)) - letterWidth) / 2;
                 }
-                letterBeginning = (beginning + spacing) * textWidth;
-                canvas.drawText(texts[i].toCharArray(), j, 1, letterPlaces[i].left + letterBeginning, letterPlaces[i].bottom, paint);
+                float letterBottom = letterPlaces.bottom - (letterPlaces.height() - textBounds.height()) / 2;
+                canvas.drawText(texts[i].toCharArray(), j, 1, letterStart, letterBottom, paint);
             }
             if (texts.length > 1) {
                 canvas.restore();
             }
         }
         canvas.rotate(25, canvas.getWidth() / 2, canvas.getHeight() / 2);
-    }
-
-    private RectF getTextClipRect(int width, int height, int circleSector, int sectorAngle) {
-        RectF rectF;
-        if (sectorAngle == 360) {
-            rectF = new RectF(0, 0, width, height);
-            return rectF;
-        }
-        rectF = new RectF(Math.round(width / 2 + (width / 2 * Math.cos(Math.toRadians(circleSector * sectorAngle))) * 0.9),
-                Math.round(height / 2 + (height / 2 * Math.sin(Math.toRadians(circleSector * sectorAngle))) * 0.9),
-                Math.round(width / 2 + (width / 2 * Math.cos(Math.toRadians((circleSector + 1) * sectorAngle))) * 0.9),
-                Math.round(height / 2 + (height / 2 * Math.sin(Math.toRadians((circleSector + 1) * sectorAngle))) * 0.9));
-        if (rectF.left > rectF.right) {
-            float temp = rectF.left;
-            rectF.left = rectF.right;
-            rectF.right = temp;
-        }
-        if (rectF.top > rectF.bottom) {
-            float temp = rectF.top;
-            rectF.top = rectF.bottom;
-            rectF.bottom = temp;
-        }
-        if (rectF.left == rectF.right) {
-            rectF.left = 0;
-        }
-        if (rectF.top == rectF.bottom && texts.length == 2 && circleSector == 1) {
-            rectF.top = 0;
-        } else if (rectF.top == rectF.bottom && texts.length == 2 && circleSector == 0) {
-            rectF.bottom = height;
-        }
-        return rectF;
-    }
-
-    private boolean isVertical(RectF rectF) {
-        return rectF.right - rectF.left < rectF.bottom - rectF.top;
     }
 }

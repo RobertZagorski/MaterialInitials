@@ -38,6 +38,7 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
         }
         holder.textView.setText(outputText);
         MaterialInitialsDrawable drawable = new MaterialInitialsDrawable(values);
+        drawable.mutate();
         holder.image.setImageDrawable(drawable);
     }
 
