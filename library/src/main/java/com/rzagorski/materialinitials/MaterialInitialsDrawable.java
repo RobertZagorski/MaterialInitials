@@ -148,13 +148,17 @@ public class MaterialInitialsDrawable extends Drawable {
             textBounds.left += originalTextWidth * 0.09;
             textBounds.right -= originalTextWidth * 0.09;
             float textWidth = textBounds.width();
+            float letterBottom = letterPlaces.bottom - (letterPlaces.height() - textBounds.height()) / 2;
             for (int j = 0; j < texts[i].length(); ++j) {
                 float letterStart = letterPlaces.left + (letterPlaces.width() - textBounds.width()) / 2 + j * textWidth / texts[i].length();
                 float letterWidth = paint.measureText(texts[i].substring(j, j + 1));
-                if (originalTextWidth / texts[i].length() > letterWidth && j > 0) {
-                    letterStart += (paint.measureText(texts[i].substring(j - 1, j)) - letterWidth) / 2;
+                if (originalTextWidth / texts[i].length() > letterWidth) {
+                    if (j == 0) {
+                        letterStart -= (originalTextWidth / texts[i].length() - letterWidth) / 2;
+                    } else {
+                        letterStart += (paint.measureText(texts[i].substring(j - 1, j)) - letterWidth) / 2;
+                    }
                 }
-                float letterBottom = letterPlaces.bottom - (letterPlaces.height() - textBounds.height()) / 2;
                 canvas.drawText(texts[i].toCharArray(), j, 1, letterStart, letterBottom, paint);
             }
             if (texts.length > 1) {
