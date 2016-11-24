@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.rzagorski.materialinitials.MaterialInitialsDrawable;
+import com.rzagorski.materialinitialstest.helper.ImageHandler;
 
 import java.util.List;
 
@@ -15,10 +15,12 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Holder> {
     int mLayoutResource;
     List<String[]> mList;
+    ImageHandler<Holder> mImageHandler;
 
-    public Adapter(int layoutResource, List<String[]> list) {
+    public Adapter(int layoutResource, List<String[]> list, ImageHandler imageHandler) {
         this.mLayoutResource = layoutResource;
         this.mList = list;
+        mImageHandler = imageHandler;
     }
 
     @Override
@@ -37,9 +39,7 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
             outputText += values[i];
         }
         holder.textView.setText(outputText);
-        MaterialInitialsDrawable drawable = new MaterialInitialsDrawable(values);
-        drawable.mutate();
-        holder.image.setImageDrawable(drawable);
+        mImageHandler.onBindImage(holder, values);
     }
 
     @Override

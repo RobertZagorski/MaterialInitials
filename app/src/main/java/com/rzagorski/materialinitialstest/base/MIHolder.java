@@ -8,8 +8,8 @@ import com.rzagorski.materialinitials.MaterialInitials;
 import com.rzagorski.materialinitialstest.R;
 
 public class MIHolder extends RecyclerView.ViewHolder {
-    MaterialInitials image;
-    TextView textView;
+    public MaterialInitials image;
+    public TextView textView;
 
     public MIHolder(View itemView) {
         super(itemView);

@@ -13,16 +13,16 @@ import com.rzagorski.materialinitialstest.helper.SampleListCreator;
  * Created by Robert Zagórski on 2016-11-21.
  */
 
-public class Fragment2MI extends BaseFragment {
+public class Fragment3words extends BaseFragment {
 
     @Override
     public String getTitle() {
-        return "2 initials";
+        return "3 words initials";
     }
 
     protected RecyclerView.Adapter getAdapter() {
         return new MIAdapter(R.layout.layout_with_material_initials,
-                SampleListCreator.populateList(100, 2, 2),
+                SampleListCreator.populateList(100, 1, 3),
                 new ImageHandler<MIHolder>() {
                     @Override
                     public void onBindImage(MIHolder holder, String[] values) {

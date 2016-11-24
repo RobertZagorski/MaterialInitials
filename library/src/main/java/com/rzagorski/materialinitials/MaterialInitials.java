@@ -37,6 +37,10 @@ public class MaterialInitials extends ImageView {
         miDrawable.setTexts(texts);
     }
 
+    public void setBackgroundColors(int... color) {
+        miDrawable.setBackgroundColors(color);
+    }
+
     @Override
     public void draw(Canvas canvas) {
         if (getBackground() != null || getDrawable() != null) {

@@ -9,11 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import com.rzagorski.materialinitialstest.lists.Fragment1MI;
 import com.rzagorski.materialinitialstest.lists.Fragment1View;
 import com.rzagorski.materialinitialstest.lists.Fragment2MI;
-import com.rzagorski.materialinitialstest.lists.Fragment2View;
 import com.rzagorski.materialinitialstest.lists.Fragment3MI;
-import com.rzagorski.materialinitialstest.lists.Fragment3View;
+import com.rzagorski.materialinitialstest.lists.Fragment3words;
 import com.rzagorski.materialinitialstest.lists.Fragment4MI;
-import com.rzagorski.materialinitialstest.lists.Fragment4View;
+import com.rzagorski.materialinitialstest.lists.FragmentAlpha;
+import com.rzagorski.materialinitialstest.lists.FragmentBackgroundColors;
 
 public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
@@ -30,11 +30,11 @@ public class MainActivity extends AppCompatActivity {
                         new Fragment1MI(),
                         new Fragment1View(),
                         new Fragment2MI(),
-                        new Fragment2View(),
                         new Fragment3MI(),
-                        new Fragment3View(),
                         new Fragment4MI(),
-                        new Fragment4View()
+                        new Fragment3words(),
+                        new FragmentBackgroundColors(),
+                        new FragmentAlpha()
                 })
         );
         tabLayout.setupWithViewPager(viewPager);

@@ -8,8 +8,8 @@ import android.widget.TextView;
 import com.rzagorski.materialinitialstest.R;
 
 public class Holder extends RecyclerView.ViewHolder {
-    ImageView image;
-    TextView textView;
+    public ImageView image;
+    public TextView textView;
 
     public Holder(View itemView) {
         super(itemView);

@@ -20,22 +20,22 @@ public class SampleListCreator {
         symbols = tmp.toString().toCharArray();
     }
 
-    public static List<String[]> populateList(int listSize, int arraySize) {
+    public static List<String[]> populateList(int listSize, int arraySize, int words) {
         List<String[]> outputList = new ArrayList<>(listSize);
         for (int i = 0; i < listSize; ++i) {
             String[] listItem = new String[arraySize];
             for (int j = 0; j < arraySize; ++j) {
-                listItem[j] = createRandomString(10);
+                listItem[j] = createRandomString(5, words);
             }
             outputList.add(i, listItem);
         }
         return outputList;
     }
 
-    private static String createRandomString(int length) {
-        char[] buf = new char[length * 2 + 1];
+    private static String createRandomString(int length, int words) {
+        char[] buf = new char[length * words + 1];
         for (int idx = 0; idx < buf.length; ++idx) {
-            if (idx == length) {
+            if (idx > 0 && idx % length == 0) {
                 buf[idx] = ' ';
                 continue;
             }
