@@ -103,7 +103,6 @@ public class MaterialInitialsDrawable extends Drawable {
         Path path = new Path();
         path.addCircle(width / 2, height / 2, width / 2, Path.Direction.CW);
         canvas.clipPath(path);
-        //canvas.drawColor(Color.parseColor("#FF0000"));
         Paint whitePaint = new Paint();
         whitePaint.setColor(Color.WHITE);
         whitePaint.setStrokeWidth(4);
@@ -144,27 +143,62 @@ public class MaterialInitialsDrawable extends Drawable {
             Rect textBounds = new Rect();
             paint.getTextBounds(texts[i], 0, texts[i].length(), textBounds);
             Rect letterPlaces = canvas.getClipBounds();
-            float originalTextWidth = textBounds.width();
-            textBounds.left += originalTextWidth * 0.09;
-            textBounds.right -= originalTextWidth * 0.09;
-            float textWidth = textBounds.width();
+            float spacePercentage = 0.8F;
+            float kernedTextWidth = measureKernedText(texts[i], paint, spacePercentage);
             float letterBottom = letterPlaces.bottom - (letterPlaces.height() - textBounds.height()) / 2;
-            for (int j = 0; j < texts[i].length(); ++j) {
-                float letterStart = letterPlaces.left + (letterPlaces.width() - textBounds.width()) / 2 + j * textWidth / texts[i].length();
-                float letterWidth = paint.measureText(texts[i].substring(j, j + 1));
-                if (originalTextWidth / texts[i].length() > letterWidth) {
-                    if (j == 0) {
-                        letterStart -= (originalTextWidth / texts[i].length() - letterWidth) / 2;
-                    } else {
-                        letterStart += (paint.measureText(texts[i].substring(j - 1, j)) - letterWidth) / 2;
-                    }
-                }
-                canvas.drawText(texts[i].toCharArray(), j, 1, letterStart, letterBottom, paint);
-            }
+            float letterStart = letterPlaces.left + (letterPlaces.width() - kernedTextWidth) / 2;
+            drawKernedText(canvas, texts[i], letterStart, letterBottom, paint, spacePercentage);
             if (texts.length > 1) {
                 canvas.restore();
             }
         }
         canvas.rotate(25, canvas.getWidth() / 2, canvas.getHeight() / 2);
+    }
+
+    /**
+     * Draw kerned text by drawing the text string character by character with a space in between.
+     * Return the width of the text.
+     * If canvas is null, the text won't be drawn, but the width will still be returned/
+     * kernPercentage determines the space between each letter. If it's 0, there will be no space between letters.
+     * Otherwise, there will be space between each letter. The  value is a fraction of the width of a blank space.
+     *
+     * @author TER
+     */
+    private void drawKernedText(Canvas canvas, String text, float xOffset, float yOffset, Paint paint, float kernPercentage) {
+        Rect textRect = new Rect();
+        int space = Math.round(paint.measureText(" ") * kernPercentage);
+        for (int i = 0; i < text.length(); i++) {
+            String letter = String.valueOf(text.charAt(i));
+            if (letter.equalsIgnoreCase("i")) {
+                xOffset += space / 2;
+            }
+            if (canvas != null) {
+                canvas.drawText(letter, xOffset, yOffset, paint);
+            }
+            int charWidth;
+            paint.getTextBounds(text, i, i + 1, textRect);
+            charWidth = textRect.width() - space;
+            xOffset += charWidth;
+        }
+    }
+
+    private int measureKernedText(String text, Paint paint, float kernPercentage) {
+        Rect textRect = new Rect();
+        int width = 0;
+        int space = Math.round(paint.measureText(" ") * kernPercentage);
+        for (int i = 0; i < text.length(); i++) {
+            String letter = String.valueOf(text.charAt(i));
+            if (letter.equalsIgnoreCase("i")) {
+                width += space / 2;
+            }
+            int charWidth;
+            paint.getTextBounds(text, i, i + 1, textRect);
+            charWidth = textRect.width() - space;
+            if (letter.equalsIgnoreCase("i")) {
+                width += space / 2;
+            }
+            width += charWidth;
+        }
+        return width + space;
     }
 }
