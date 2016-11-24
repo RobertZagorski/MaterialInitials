@@ -20,8 +20,12 @@ public class MaterialInitialsDrawable extends Drawable {
     private int[] backgroundColors;
     private String[] texts;
 
+    private Paint textPaint;
+    private Paint whitePaint;
+
     public MaterialInitialsDrawable() {
         super();
+        createPaints();
         texts = new String[]{};
         backgroundColorsMaterial500 = new int[]{Color.rgb(244, 67, 54),
                 Color.rgb(233, 30, 99),
@@ -50,6 +54,7 @@ public class MaterialInitialsDrawable extends Drawable {
     }
 
     public MaterialInitialsDrawable(int[] backgroundColors, String[] texts) {
+        this();
         this.backgroundColors = backgroundColors;
         setTexts(texts);
     }
@@ -83,12 +88,27 @@ public class MaterialInitialsDrawable extends Drawable {
 
     @Override
     public void setAlpha(int i) {
+        textPaint.setAlpha(i);
+    }
 
+    public void setTextColor(int color) {
+        textPaint.setColor(color);
+    }
+
+    public void setTextAlpha(int alpha) {
+        textPaint.setAlpha(alpha);
+    }
+
+    private void createPaints() {
+        whitePaint = new Paint();
+        whitePaint.setColor(Color.WHITE);
+        textPaint = new Paint();
+        textPaint.setColor(Color.WHITE);
+        textPaint.setAlpha(136);
     }
 
     @Override
     public void setColorFilter(ColorFilter colorFilter) {
-
     }
 
     @Override
@@ -103,13 +123,7 @@ public class MaterialInitialsDrawable extends Drawable {
         Path path = new Path();
         path.addCircle(width / 2, height / 2, width / 2, Path.Direction.CW);
         canvas.clipPath(path);
-        Paint whitePaint = new Paint();
-        whitePaint.setColor(Color.WHITE);
-        whitePaint.setStrokeWidth(4);
-        whitePaint.setColor(Color.WHITE);
-        Paint paint = new Paint();
-        paint.setColor(Color.parseColor("#88FFFFFF"));
-        paint.setTextSize((height));
+        textPaint.setTextSize((height));
         int angle = 360 / (texts.length == 0 ? 1 : texts.length);
         for (int i = 0; i < texts.length; ++i) {
             Paint backgroundPaint = new Paint();
@@ -129,7 +143,7 @@ public class MaterialInitialsDrawable extends Drawable {
             }
         }
         if (texts.length > 1) {
-            paint.setTextSize(paint.getTextSize() / 2);
+            textPaint.setTextSize(textPaint.getTextSize() / 2);
         }
         for (int i = 0; i < texts.length; ++i) {
             if (texts.length > 1) {
@@ -141,13 +155,13 @@ public class MaterialInitialsDrawable extends Drawable {
                 canvas.clipPath(clipPath, Region.Op.INTERSECT);
             }
             Rect textBounds = new Rect();
-            paint.getTextBounds(texts[i], 0, texts[i].length(), textBounds);
+            textPaint.getTextBounds(texts[i], 0, texts[i].length(), textBounds);
             Rect letterPlaces = canvas.getClipBounds();
             float spacePercentage = 0.8F;
-            float kernedTextWidth = measureKernedText(texts[i], paint, spacePercentage);
+            float kernedTextWidth = measureKernedText(texts[i], textPaint, spacePercentage);
             float letterBottom = letterPlaces.bottom - (letterPlaces.height() - textBounds.height()) / 2;
             float letterStart = letterPlaces.left + (letterPlaces.width() - kernedTextWidth) / 2;
-            drawKernedText(canvas, texts[i], letterStart, letterBottom, paint, spacePercentage);
+            drawKernedText(canvas, texts[i], letterStart, letterBottom, textPaint, spacePercentage);
             if (texts.length > 1) {
                 canvas.restore();
             }

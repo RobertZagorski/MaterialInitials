@@ -41,6 +41,10 @@ public class MaterialInitials extends ImageView {
         miDrawable.setBackgroundColors(color);
     }
 
+    public void setTextAlpha(int alpha) {
+        miDrawable.setTextAlpha(alpha);
+    }
+
     @Override
     public void draw(Canvas canvas) {
         if (getBackground() != null || getDrawable() != null) {

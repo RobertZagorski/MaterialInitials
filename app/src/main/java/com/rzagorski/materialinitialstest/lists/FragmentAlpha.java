@@ -17,7 +17,7 @@ public class FragmentAlpha extends BaseFragment {
 
     @Override
     public String getTitle() {
-        return "3-View";
+        return "Alpha";
     }
 
     protected RecyclerView.Adapter getAdapter() {
@@ -27,6 +27,7 @@ public class FragmentAlpha extends BaseFragment {
                     @Override
                     public void onBindImage(MIHolder holder, String[] values) {
                         holder.image.setTexts(values);
+                        holder.image.setTextAlpha(80);
                     }
                 });
     }
