@@ -50,12 +50,18 @@ public class MaterialInitialsDrawable extends Drawable {
 
     public MaterialInitialsDrawable(String[] texts) {
         this();
+        if (texts == null) {
+            return;
+        }
         setTexts(texts);
     }
 
     public MaterialInitialsDrawable(int[] backgroundColors, String[] texts) {
         this();
         this.backgroundColors = backgroundColors;
+        if (texts == null) {
+            return;
+        }
         setTexts(texts);
     }
 
@@ -125,6 +131,9 @@ public class MaterialInitialsDrawable extends Drawable {
         canvas.clipPath(path);
         textPaint.setTextSize((height));
         int angle = 360 / (texts.length == 0 ? 1 : texts.length);
+        if (texts.length == 0) {
+            throw new IllegalStateException("Texts null");
+        }
         for (int i = 0; i < texts.length; ++i) {
             Paint backgroundPaint = new Paint();
             int color;

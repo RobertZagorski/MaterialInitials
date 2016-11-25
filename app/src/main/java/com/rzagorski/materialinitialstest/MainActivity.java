@@ -14,6 +14,7 @@ import com.rzagorski.materialinitialstest.lists.Fragment3words;
 import com.rzagorski.materialinitialstest.lists.Fragment4MI;
 import com.rzagorski.materialinitialstest.lists.FragmentAlpha;
 import com.rzagorski.materialinitialstest.lists.FragmentBackgroundColors;
+import com.rzagorski.materialinitialstest.lists.FragmentDifferentTextColor;
 
 public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
                         new Fragment4MI(),
                         new Fragment3words(),
                         new FragmentBackgroundColors(),
-                        new FragmentAlpha()
+                        new FragmentAlpha(),
+                        new FragmentDifferentTextColor()
                 })
         );
         tabLayout.setupWithViewPager(viewPager);

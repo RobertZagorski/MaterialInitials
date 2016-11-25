@@ -15,7 +15,7 @@ import java.util.List;
 public class MIAdapter extends RecyclerView.Adapter<MIHolder> {
     int mLayoutResource;
     List<String[]> mList;
-    ImageHandler mImageHandler;
+    ImageHandler<MIHolder> mImageHandler;
 
     public MIAdapter(int layoutResource, List<String[]> list, ImageHandler imageHandler) {
         this.mLayoutResource = layoutResource;
