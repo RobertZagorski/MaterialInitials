@@ -22,6 +22,7 @@ public class MaterialInitialsDrawable extends Drawable {
 
     private Paint textPaint;
     private Paint whitePaint;
+    private float rotation = 0F;
 
     public MaterialInitialsDrawable() {
         super();
@@ -105,6 +106,10 @@ public class MaterialInitialsDrawable extends Drawable {
         textPaint.setAlpha(alpha);
     }
 
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
+
     private void createPaints() {
         whitePaint = new Paint();
         whitePaint.setColor(Color.WHITE);
@@ -170,12 +175,18 @@ public class MaterialInitialsDrawable extends Drawable {
             float kernedTextWidth = measureKernedText(texts[i], textPaint, spacePercentage);
             float letterBottom = letterPlaces.bottom - (letterPlaces.height() - textBounds.height()) / 2;
             float letterStart = letterPlaces.left + (letterPlaces.width() - kernedTextWidth) / 2;
+            if (rotation != 0) {
+                canvas.save();
+                canvas.rotate(20, letterPlaces.centerX(), letterPlaces.centerY());
+            }
             drawKernedText(canvas, texts[i], letterStart, letterBottom, textPaint, spacePercentage);
+            if (rotation != 0) {
+                canvas.restore();
+            }
             if (texts.length > 1) {
                 canvas.restore();
             }
         }
-        canvas.rotate(25, canvas.getWidth() / 2, canvas.getHeight() / 2);
     }
 
     /**

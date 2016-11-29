@@ -35,6 +35,7 @@ public class MaterialInitials extends ImageView {
         int backgroundColorsResource = typedArray.getResourceId(R.styleable.MaterialInitials_mi_background_colors, 0);
         int[] backgroundColors = obtainBackgroundColors(backgroundColorsResource);
         int textsResource = typedArray.getResourceId(R.styleable.MaterialInitials_mi_texts, 0);
+        float rotation = typedArray.getFloat(R.styleable.MaterialInitials_mi_rotation, 0);
         String[] texts = obtainTexts(textsResource);
         if (isInEditMode() && texts == null) {
             texts = new String[]{"Android " + Build.VERSION.CODENAME};
@@ -43,6 +44,7 @@ public class MaterialInitials extends ImageView {
         miDrawable = new MaterialInitialsDrawable(backgroundColors, texts);
         miDrawable.setTextColor(color);
         miDrawable.setAlpha(alpha);
+        miDrawable.setRotation(rotation);
     }
 
     private int[] obtainBackgroundColors(int backgroundRes) {
@@ -82,6 +84,7 @@ public class MaterialInitials extends ImageView {
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
         int size = width > height ? height : width;
@@ -98,6 +101,11 @@ public class MaterialInitials extends ImageView {
 
     public void setTextAlpha(int alpha) {
         miDrawable.setTextAlpha(alpha);
+    }
+
+    @Override
+    public void setRotation(float rotation) {
+        miDrawable.setRotation(rotation);
     }
 
     @Override

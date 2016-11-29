@@ -4,6 +4,7 @@
         <attr name="mi_textColor" format="color|reference"/>
         <attr name="mi_textAlpha" format="integer|reference"/>
         <attr name="mi_background_colors" format="reference"/>
-        <attr name="mi_texts" format="reference|"/>
+        <attr name="mi_texts" format="reference"/>
+        <attr name="mi_rotation" format="float|reference"/>
     </declare-styleable>
 </resources>
