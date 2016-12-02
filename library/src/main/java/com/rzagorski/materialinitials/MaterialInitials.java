@@ -28,28 +28,53 @@ import android.widget.ImageView;
  * <p>
  * The view can be controlled by the following {@code .xml} attributes:
  * <ul>
- * <li> {@link com.rzagorski.materialinitials.R.styleable#MaterialInitials_mi_background_colors mi_background_colors}
- * - {@code Integer} array of color resources</li>
- * <li> {@link com.rzagorski.materialinitials.R.styleable#MaterialInitials_mi_rotation mi_rotation}
+ * <li>
+ * {@link com.rzagorski.materialinitials.R.styleable#MaterialInitials_mi_background_colors mi_background_colors}
+ * - {@code Integer} array of color resources
+ * </li>
+ * <li>
+ * {@link com.rzagorski.materialinitials.R.styleable#MaterialInitials_mi_rotation mi_rotation}
  * - {@code Float} representing rotation in degrees in clockwise direction</li>
- * <li> {@link com.rzagorski.materialinitials.R.styleable#MaterialInitials_mi_texts mi_texts}
- * - {@code String} array of texts. Each text must contain at most 2 spaces.</li>
+ * <li>
+ * {@link com.rzagorski.materialinitials.R.styleable#MaterialInitials_mi_texts mi_texts}
+ * - {@code String} array of texts. Each text must contain at most 2 spaces.
+ * </li>
+ * <li>
+ * {@link com.rzagorski.materialinitials.R.styleable#MaterialInitials_mi_texts alpha}
+ * - {@code int} represents the alpha channel of a color used to draw initials. Between 0 and 255.
+ * </li>
  * </ul>
  * <p>
  * Exposes an API to customise the drawing using the following functions (equivalents of the options above):
  * <ul>
- * <li>{@link #setBackgroundColors(int...)}</li>
- * <li>{@link #setTextRotation(float)}</li>
- * <li>{@link #setTexts(String...)}</li>
- * <li>{@link #setTextAlpha(int)} </li>
+ * <li>
+ * {@link #setBackgroundColors(int...)}
+ * </li>
+ * <li>
+ * {@link #setTextRotation(float)}
+ * </li>
+ * <li>
+ * {@link #setTexts(String...)}
+ * </li>
+ * <li>
+ * {@link #setTextAlpha(int)}
+ * </li>
  * </ul>
  * <p>
  * Default parameters:
  * <ul>
- * <li>The texts are empty</li>
- * <li>The text color is white (#FFFFFF)</li>
- * <li>The alpha is 136 which is 88 in HEX</li>
- * <li>The background colors are defined as 500 colors from <a href="https://material.google.com/style/color.html#">the material palette</a></li>
+ * <li>
+ * The texts are empty
+ * </li>
+ * <li>
+ * The text color is white (#FFFFFF)
+ * </li>
+ * <li>
+ * The alpha is 136 which is 88 in HEX
+ * </li>
+ * <li>
+ * The background colors are defined as 500 colors from <a href="https://material.google.com/style/color.html#color-color-palette">the material palette</a>
+ * </li>
  * </ul>
  * <p>
  * Created by Robert Zagórski on 19.11.2016.
@@ -74,8 +99,8 @@ public class MaterialInitials extends ImageView {
 
     private void initDrawable(AttributeSet attrs) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.MaterialInitials);
-        int color = typedArray.getColor(R.styleable.MaterialInitials_mi_textColor, resolveColor(android.R.color.white));
-        int alpha = typedArray.getInt(R.styleable.MaterialInitials_mi_textAlpha, 136);
+        int color = typedArray.getColor(R.styleable.MaterialInitials_mi_text_color, resolveColor(android.R.color.white));
+        int alpha = typedArray.getInt(R.styleable.MaterialInitials_mi_text_alpha, 136);
         int backgroundColorsResource = typedArray.getResourceId(R.styleable.MaterialInitials_mi_background_colors, 0);
         int[] backgroundColors = obtainBackgroundColors(backgroundColorsResource);
         int textsResource = typedArray.getResourceId(R.styleable.MaterialInitials_mi_texts, 0);
