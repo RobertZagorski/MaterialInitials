@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Robert Zagórski.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.rzagorski.materialinitials;
 
 import android.graphics.Canvas;
@@ -12,6 +27,10 @@ import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 
 /**
+ * A drawable, that draws initials of passed texts on the colorful background.
+ * <p>
+ * For the reference of usage see {@link MaterialInitials}
+ * <p>
  * Created by Robert Zagórski on 20.11.2016.
  */
 
@@ -66,6 +85,12 @@ public class MaterialInitialsDrawable extends Drawable {
         setTexts(texts);
     }
 
+    /**
+     * an array of texts of type {@code String}. Each of them is divided into parts (by space - {@code " "}).
+     * From each part the first letter is taken and drawn on background.
+     *
+     * @param inputTexts an arbitrary number of {@code String} or an array of {@code String}
+     */
     public void setTexts(String... inputTexts) {
         if (inputTexts == null) {
             throw new IllegalArgumentException("Passed texts cannot be null");
@@ -89,24 +114,43 @@ public class MaterialInitialsDrawable extends Drawable {
         }
     }
 
+    /**
+     * an array of colors represented as {@code int}.
+     *
+     * @param colors an arbitrary number of {@code int} or an array of {@code int} representing colors
+     */
     public void setBackgroundColors(int[] colors) {
         backgroundColors = colors;
     }
 
     @Override
     public void setAlpha(int i) {
-        textPaint.setAlpha(i);
     }
 
+    /**
+     * A parameter sets the color of text.
+     *
+     * @param color an int indicating the color of text
+     */
     public void setTextColor(int color) {
         textPaint.setColor(color);
     }
 
+    /**
+     * A parameter sets an alpha paramter of text color. Must be between 0 and 255.
+     *
+     * @param alpha an apha of the text drawn on view background
+     */
     public void setTextAlpha(int alpha) {
         textPaint.setAlpha(alpha);
     }
 
-    public void setRotation(float rotation) {
+    /**
+     * Sets the rotation of letters. Measured in degress in clockwise direction. Must be between 0 and 360.
+     *
+     * @param rotation a parameter indicating rotation of letters
+     */
+    public void setTextRotation(float rotation) {
         this.rotation = rotation;
     }
 

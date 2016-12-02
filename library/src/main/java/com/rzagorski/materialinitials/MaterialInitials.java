@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Robert Zagórski.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.rzagorski.materialinitials;
 
 import android.content.Context;
@@ -8,6 +23,35 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 /**
+ * A view, that automatically draws {@link com.rzagorski.materialinitials.MaterialInitialsDrawable}
+ * as its background.
+ * <p>
+ * The view can be controlled by the following {@code .xml} attributes:
+ * <ul>
+ * <li> {@link com.rzagorski.materialinitials.R.styleable#MaterialInitials_mi_background_colors mi_background_colors}
+ * - {@code Integer} array of color resources</li>
+ * <li> {@link com.rzagorski.materialinitials.R.styleable#MaterialInitials_mi_rotation mi_rotation}
+ * - {@code Float} representing rotation in degrees in clockwise direction</li>
+ * <li> {@link com.rzagorski.materialinitials.R.styleable#MaterialInitials_mi_texts mi_texts}
+ * - {@code String} array of texts. Each text must contain at most 2 spaces.</li>
+ * </ul>
+ * <p>
+ * Exposes an API to customise the drawing using the following functions (equivalents of the options above):
+ * <ul>
+ * <li>{@link #setBackgroundColors(int...)}</li>
+ * <li>{@link #setTextRotation(float)}</li>
+ * <li>{@link #setTexts(String...)}</li>
+ * <li>{@link #setTextAlpha(int)} </li>
+ * </ul>
+ * <p>
+ * Default parameters:
+ * <ul>
+ * <li>The texts are empty</li>
+ * <li>The text color is white (#FFFFFF)</li>
+ * <li>The alpha is 136 which is 88 in HEX</li>
+ * <li>The background colors are defined as 500 colors from <a href="https://material.google.com/style/color.html#">the material palette</a></li>
+ * </ul>
+ * <p>
  * Created by Robert Zagórski on 19.11.2016.
  */
 
@@ -44,7 +88,7 @@ public class MaterialInitials extends ImageView {
         miDrawable = new MaterialInitialsDrawable(backgroundColors, texts);
         miDrawable.setTextColor(color);
         miDrawable.setAlpha(alpha);
-        miDrawable.setRotation(rotation);
+        miDrawable.setTextRotation(rotation);
     }
 
     private int[] obtainBackgroundColors(int backgroundRes) {
@@ -91,21 +135,51 @@ public class MaterialInitials extends ImageView {
         setMeasuredDimension(size, size);
     }
 
+    /**
+     * an array of texts of type {@code String}. Each of them is divided into parts (by space - {@code " "}).
+     * From each part the first letter is taken and drawn on background.
+     *
+     * @param texts an arbitrary number of {@code String} or an array of {@code String}
+     */
     public void setTexts(String... texts) {
         miDrawable.setTexts(texts);
     }
 
+    /**
+     * an array of colors represented as {@code int}.
+     *
+     * @param color an arbitrary number of {@code int} or an array of {@code int} representing colors
+     */
     public void setBackgroundColors(int... color) {
         miDrawable.setBackgroundColors(color);
     }
 
+    /**
+     * A parameter sets an alpha paramter of text color. Must be between 0 and 255.
+     *
+     * @param alpha an apha of the text drawn on view background
+     */
     public void setTextAlpha(int alpha) {
         miDrawable.setTextAlpha(alpha);
     }
 
-    @Override
-    public void setRotation(float rotation) {
-        miDrawable.setRotation(rotation);
+    /**
+     * A parameter sets the color of text.
+     *
+     * @param color an int indicating the color of text
+     */
+    public void setTextColor(int color) {
+        miDrawable.setTextColor(color);
+    }
+
+
+    /**
+     * Sets the rotation of letters. Measured in degress in clockwise direction. Must be between 0 and 360.
+     *
+     * @param rotation a parameter indicating rotation of letters
+     */
+    public void setTextRotation(float rotation) {
+        miDrawable.setTextRotation(rotation);
     }
 
     @Override
