@@ -32,7 +32,7 @@ public class FragmentRotated extends BaseFragment {
 
     @Override
     public String getTitle() {
-        return "Text color";
+        return "Rotated";
     }
 
     protected RecyclerView.Adapter getAdapter() {

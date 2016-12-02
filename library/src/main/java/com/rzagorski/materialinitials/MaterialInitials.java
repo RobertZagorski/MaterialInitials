@@ -144,10 +144,10 @@ public class MaterialInitials extends ImageView {
     }
 
     private int resolveColor(int color) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            return getContext().getResources().getColor(color);
-        } else {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return getContext().getResources().getColor(color, getContext().getTheme());
+        } else {
+            return getContext().getResources().getColor(color);
         }
     }
 

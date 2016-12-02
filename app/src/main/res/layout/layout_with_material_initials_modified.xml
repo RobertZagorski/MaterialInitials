@@ -15,7 +15,7 @@
         android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mi_textColor="@android:color/black"/>
+        app:mi_text_color="@android:color/black"/>
 
     <TextView
         android:id="@+id/text_view"

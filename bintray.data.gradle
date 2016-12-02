@@ -1,0 +1,23 @@
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'MaterialInitials'
+
+    publishedGroupId = 'com.rzagorski'
+    libraryName = 'MaterialInitials'
+    artifact = 'materialinitials'
+
+    libraryDescription = 'An Android view indicator composed of person`s initials'
+
+    siteUrl = 'https://github.com/RobertZagorski/MaterialInitials'
+    gitUrl = 'https://github.com/RobertZagorski/MaterialInitials.git'
+
+    libraryVersion = '0.7.0'
+
+    developerId = 'RobertZagorski'
+    developerName = 'Robert Zagórski'
+    developerEmail = ''
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}

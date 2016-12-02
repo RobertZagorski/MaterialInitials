@@ -1,5 +1,7 @@
 # Material Initials
 
+ [ ![Download](https://api.bintray.com/packages/robertzagorski/maven/MaterialInitials/images/download.svg?version=0.7.0) ](https://bintray.com/robertzagorski/maven/MaterialInitials/0.7.0/link)
+
 An indicator that can be used as a background of person image or when it the is no image.
 Possibilities include every application that utilises human resources (numbers in contact apps, messages in chat applications, etc...)
 
@@ -38,6 +40,20 @@ Possibilities include every application that utilises human resources (numbers i
    ![Rotated letters](./graphics/rotated.png "Rotated letters")
 
 ## Usage:
+
+Import gradle dependency:
+
+  * Add following lines to you project's main `build.gradle`:
+    
+        buildscript {
+            repositories {
+                jcenter()
+            }
+        }
+ 
+  * Add a dependency to application `build.gradle`:
+     
+        compile 'com.rzagorski:materialinitials:0.7.0'
 
 Add [`MaterialInitials`](./library/src/main/java/com/rzagorski/materialinitials/MaterialInitials.java) view in your .xml
 
@@ -188,3 +204,19 @@ There are three possible ways to control each aspect of drawing:
        </td>
      </tr>
   </table>
+  
+## License
+
+    Copyright 2016 Robert Zagórski.
+    
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    
+       http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
