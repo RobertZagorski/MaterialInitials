@@ -1,6 +1,6 @@
 # Material Initials
 
- [ ![Download](https://api.bintray.com/packages/robertzagorski/maven/MaterialInitials/images/download.svg?version=0.7.0) ](https://bintray.com/robertzagorski/maven/MaterialInitials/0.7.0/link)
+ [ ![Download](https://api.bintray.com/packages/robertzagorski/maven/MaterialInitials/images/download.svg?version=0.7.1) ](https://bintray.com/robertzagorski/maven/MaterialInitials/0.7.1/link)
 
 An indicator that can be used as a background of person image or when it the is no image.
 Possibilities include every application that utilises human resources (numbers in contact apps, messages in chat applications, etc...)
