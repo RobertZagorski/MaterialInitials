@@ -173,16 +173,18 @@ public class MaterialInitialsDrawable extends Drawable {
 
     @Override
     public void draw(Canvas canvas) {
-        int width = canvas.getWidth();
-        int height = canvas.getHeight();
+        Rect padding = canvas.getClipBounds();
+        int width = padding.width();
+        int height = padding.height();
+        int middleX = (padding.right - padding.left) / 2;
+        int middleY = (padding.bottom - padding.top) / 2;
+
         Path path = new Path();
-        path.addCircle(width / 2, height / 2, width / 2, Path.Direction.CW);
+        path.addCircle(middleX, middleY, width / 2, Path.Direction.CW);
         canvas.clipPath(path);
+
         textPaint.setTextSize((height));
         int angle = 360 / (texts.length == 0 ? 1 : texts.length);
-        if (texts.length == 0) {
-            throw new IllegalStateException("Texts null");
-        }
         for (int i = 0; i < texts.length; ++i) {
             Paint backgroundPaint = new Paint();
             int color;
@@ -192,9 +194,9 @@ public class MaterialInitialsDrawable extends Drawable {
                 color = backgroundColorsMaterial500[(int) Math.round(Math.random() * (backgroundColorsMaterial500.length - 1))];
             }
             backgroundPaint.setColor(color);
-            canvas.drawArc(new RectF(0, 0, width, height), i * angle, angle, true, backgroundPaint);
+            canvas.drawArc(new RectF(padding.left, padding.top, width, height), i * angle, angle, true, backgroundPaint);
             if (texts.length > 1) {
-                canvas.drawLine(width / 2, height / 2,
+                canvas.drawLine(middleX, middleY,
                         (int) (width / 2 + width / 2 * Math.cos(Math.toRadians(i * angle))),
                         (int) (height / 2 + height / 2 * Math.sin(Math.toRadians(i * angle))),
                         whitePaint);
@@ -207,7 +209,7 @@ public class MaterialInitialsDrawable extends Drawable {
             if (texts.length > 1) {
                 canvas.save();
                 Path clipPath = new Path();
-                clipPath.addArc(new RectF(0, 0, width, height), i * angle, angle);
+                clipPath.addArc(new RectF(padding.left, padding.top, width, height), i * angle, angle);
                 clipPath.lineTo(width / 2, height / 2);
                 clipPath.close();
                 canvas.clipPath(clipPath, Region.Op.INTERSECT);
@@ -241,6 +243,7 @@ public class MaterialInitialsDrawable extends Drawable {
      * Otherwise, there will be space between each letter. The  value is a fraction of the width of a blank space.
      *
      * @author TER
+     * @see <a href ="http://stackoverflow.com/a/36244570/6507689">http://stackoverflow.com</a>
      */
     private void drawKernedText(Canvas canvas, String text, float xOffset, float yOffset, Paint paint, float kernPercentage) {
         Rect textRect = new Rect();

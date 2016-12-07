@@ -11,7 +11,7 @@ ext {
     siteUrl = 'https://github.com/RobertZagorski/MaterialInitials'
     gitUrl = 'https://github.com/RobertZagorski/MaterialInitials.git'
 
-    libraryVersion = '0.7.0'
+    libraryVersion = '0.8.0'
 
     developerId = 'RobertZagorski'
     developerName = 'Robert Zagórski'

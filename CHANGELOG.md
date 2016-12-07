@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+## Version 0.8.0
+
+_2016-12-07_
+
+  * **Respecting view padding**
+        `MaterialInitialsDrawable` and `MaterialInitials` are now respecting view padding
+
 ## Version 0.7.1
 
 _2016-12-05_

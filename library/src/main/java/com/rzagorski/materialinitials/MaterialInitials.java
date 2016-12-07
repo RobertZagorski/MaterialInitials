@@ -20,7 +20,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.widget.ImageView;
+import android.view.View;
 
 /**
  * A view, that automatically draws {@link com.rzagorski.materialinitials.MaterialInitialsDrawable}
@@ -80,7 +80,7 @@ import android.widget.ImageView;
  * Created by Robert Zagórski on 19.11.2016.
  */
 
-public class MaterialInitials extends ImageView {
+public class MaterialInitials extends View {
     MaterialInitialsDrawable miDrawable;
 
     public MaterialInitials(Context context) {
@@ -110,9 +110,10 @@ public class MaterialInitials extends ImageView {
             texts = new String[]{"Android " + Build.VERSION.CODENAME};
         }
         typedArray.recycle();
+
         miDrawable = new MaterialInitialsDrawable(backgroundColors, texts);
         miDrawable.setTextColor(color);
-        miDrawable.setAlpha(alpha);
+        miDrawable.setTextAlpha(alpha);
         miDrawable.setTextRotation(rotation);
     }
 
@@ -210,10 +211,18 @@ public class MaterialInitials extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (getBackground() != null || getDrawable() != null) {
-            super.onDraw(canvas);
+        if (getBackground() != null) {
             return;
         }
+        int width = getWidth() - getPaddingLeft() - getPaddingRight();
+        int height = getHeight() - getPaddingTop() - getPaddingBottom();
+        int sizeWithPadding = width < height ? width : height;
+        canvas.clipRect((getWidth() - sizeWithPadding) / 2,
+                (getHeight() - sizeWithPadding) / 2,
+                getWidth() - (getWidth() - sizeWithPadding) / 2,
+                getHeight() - (getHeight() - sizeWithPadding) / 2);
+        canvas.save();
         miDrawable.draw(canvas);
+        canvas.restore();
     }
 }
