@@ -1,6 +1,6 @@
 # Material Initials
 
- [ ![Download](https://api.bintray.com/packages/robertzagorski/maven/MaterialInitials/images/download.svg?version=0.7.1) ](https://bintray.com/robertzagorski/maven/MaterialInitials/0.7.1/link)
+ [ ![Download](https://api.bintray.com/packages/robertzagorski/maven/MaterialInitials/images/download.svg?version=0.8.0) ](https://bintray.com/robertzagorski/maven/MaterialInitials/0.8.0/link)
 
 An indicator that can be used as a background of person image or when it the is no image.
 Possibilities include every application that utilises human resources (numbers in contact apps, messages in chat applications, etc...)
@@ -53,7 +53,7 @@ Import gradle dependency:
  
   * Add a dependency to application `build.gradle`:
      
-        compile 'com.rzagorski:materialinitials:0.7.0'
+        compile 'com.rzagorski:materialinitials:0.8.0'
 
 Add [`MaterialInitials`](./library/src/main/java/com/rzagorski/materialinitials/MaterialInitials.java) view in your .xml
 
